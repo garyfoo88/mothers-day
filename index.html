@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="一份温暖的母亲节祝福，有鲜花、感谢的话语和缤纷彩纸。">
+    <title>母亲节快乐</title>
+    <link rel="preload" href="assets/mothers-day-floral-hero.png" as="image">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <canvas class="confetti-canvas" id="confetti" aria-hidden="true"></canvas>
+    <audio id="backgroundMusic" src="assets/music.mp3" preload="auto" loop></audio>
+    <button class="music-toggle" type="button" id="musicToggle" aria-pressed="false">
+      <span aria-hidden="true">♪</span>
+      播放音乐
+    </button>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="petals" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div class="hero__content">
+          <p class="eyebrow">给妈妈的一点心意</p>
+          <h1 id="hero-title">母亲节快乐</h1>
+          <p class="hero__message">
+            平时不一定常说，但你为这个家做的事，我都记在心里。今天想认真说一句：辛苦了。
+          </p>
+          <div class="hero__actions">
+            <button class="love-button" type="button" id="celebrateButton">
+              <span aria-hidden="true">♥</span>
+              送上祝福
+            </button>
+            <a href="#note" class="text-link">看一句感谢</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="note-section" id="note" aria-labelledby="note-title">
+        <div class="section-heading">
+          <p class="eyebrow">一句感谢</p>
+          <h2 id="note-title">谢谢你，妈妈</h2>
+        </div>
+        <p class="note-copy">
+          谢谢你一直把很多事情安排得妥妥当当：家里的大小事、日常的提醒、需要时的帮忙，
+          还有那些看起来普通但其实很重要的照顾。
+        </p>
+      </section>
+
+      <section class="gratitude" aria-label="庆祝妈妈的理由">
+        <article class="gratitude-card">
+          <span class="card-icon" aria-hidden="true">✿</span>
+          <h3>你的细心</h3>
+          <p>很多小事你都会留意，也总是提前想到。</p>
+        </article>
+        <article class="gratitude-card">
+          <span class="card-icon" aria-hidden="true">♡</span>
+          <h3>你的靠谱</h3>
+          <p>家里很多事情，因为有你在，就让人放心。</p>
+        </article>
+        <article class="gratitude-card">
+          <span class="card-icon" aria-hidden="true">✦</span>
+          <h3>你的坚持</h3>
+          <p>很多不容易的日子，你都一步一步扛过来了。</p>
+        </article>
+      </section>
+
+      <section class="memory-strip" aria-labelledby="memory-title">
+        <div>
+          <p class="eyebrow">我记得的事</p>
+          <h2 id="memory-title">那些平常但重要的小事</h2>
+        </div>
+        <ul>
+          <li>出门前总会提醒几句。</li>
+          <li>家里总有一顿热饭。</li>
+          <li>关键时候给的实际建议。</li>
+          <li>把很多麻烦事默默处理好。</li>
+        </ul>
+      </section>
+
+      <section class="closing" aria-label="母亲节结尾祝福">
+        <div class="closing__flower" aria-hidden="true"></div>
+        <p>
+          母亲节快乐。希望你今天少操心一点，多休息一点，也做点自己喜欢的事。
+        </p>
+        <strong>谢谢你，妈妈。</strong>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

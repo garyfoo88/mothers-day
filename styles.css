@@ -1,0 +1,562 @@
+:root {
+  color-scheme: light;
+  --cream: #fff7ec;
+  --paper: #fffdf8;
+  --ink: #3f2924;
+  --muted: #765a50;
+  --rose: #d94f61;
+  --coral: #f07866;
+  --blush: #ffe0dc;
+  --gold: #e8a84d;
+  --sage: #647a4d;
+  --mint: #e9f1dd;
+  --shadow: 0 18px 50px rgba(82, 38, 29, 0.14);
+  --radius: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(255, 224, 220, 0.7), transparent 30rem),
+    linear-gradient(180deg, var(--cream), #fffaf2 48%, #f7f4e8);
+  font-family: "Noto Serif CJK SC", "Songti SC", "SimSun", Georgia, "Times New Roman", serif;
+  overflow-x: hidden;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+  background-image:
+    radial-gradient(circle, rgba(217, 79, 97, 0.13) 0 2px, transparent 2.5px),
+    radial-gradient(circle, rgba(100, 122, 77, 0.12) 0 1.5px, transparent 2px);
+  background-position: 0 0, 18px 24px;
+  background-size: 46px 46px, 58px 58px;
+  mask-image: linear-gradient(180deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+button,
+a {
+  font: inherit;
+}
+
+.confetti-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.music-toggle {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 30;
+  display: inline-flex;
+  min-height: 2.85rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.72rem 0.95rem;
+  border: 1px solid rgba(217, 79, 97, 0.2);
+  border-radius: var(--radius);
+  color: var(--ink);
+  background: rgba(255, 253, 248, 0.9);
+  box-shadow: 0 12px 30px rgba(82, 38, 29, 0.16);
+  cursor: pointer;
+  font-family: "Noto Sans CJK SC", "Microsoft YaHei", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-weight: 800;
+  backdrop-filter: blur(12px);
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.music-toggle:hover {
+  box-shadow: 0 16px 36px rgba(82, 38, 29, 0.2);
+  transform: translateY(-2px);
+}
+
+.music-toggle.is-playing {
+  color: #fffdf9;
+  background: linear-gradient(135deg, var(--sage), #80935e);
+}
+
+.music-toggle.needs-action {
+  box-shadow: 0 0 0 5px rgba(232, 168, 77, 0.18), 0 12px 30px rgba(82, 38, 29, 0.16);
+}
+
+.hero {
+  position: relative;
+  display: grid;
+  min-height: 92svh;
+  padding: clamp(2rem, 5vw, 5rem);
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    linear-gradient(90deg, rgba(255, 250, 242, 0.94), rgba(255, 250, 242, 0.76) 42%, rgba(255, 250, 242, 0.2)),
+    image-set(url("assets/mothers-day-floral-hero.png") 1x);
+  background-position: center;
+  background-size: cover;
+}
+
+.hero::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: 8rem;
+  z-index: -1;
+  content: "";
+  background: linear-gradient(180deg, transparent, var(--cream));
+}
+
+.hero__content {
+  align-self: center;
+  width: min(44rem, 100%);
+  animation: bloomIn 800ms ease-out both;
+}
+
+.eyebrow {
+  margin: 0 0 0.7rem;
+  color: var(--rose);
+  font-family: "Noto Sans CJK SC", "Microsoft YaHei", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+p {
+  overflow-wrap: anywhere;
+}
+
+h1 {
+  max-width: 11ch;
+  margin: 0;
+  font-size: clamp(3.35rem, 12vw, 7.75rem);
+  line-height: 0.92;
+  letter-spacing: 0;
+}
+
+h2 {
+  margin: 0;
+  font-size: clamp(2.2rem, 6vw, 4.25rem);
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+
+h3 {
+  margin: 0 0 0.65rem;
+  font-size: 1.35rem;
+}
+
+.hero__message {
+  max-width: 38rem;
+  margin: 1.45rem 0 0;
+  color: var(--muted);
+  font-size: clamp(1.1rem, 2.5vw, 1.45rem);
+  line-height: 1.55;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem 1rem;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.love-button {
+  display: inline-flex;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.58rem;
+  padding: 0.9rem 1.25rem;
+  border: 0;
+  border-radius: var(--radius);
+  color: #fffdf9;
+  background: linear-gradient(135deg, var(--rose), var(--coral));
+  box-shadow: 0 12px 24px rgba(217, 79, 97, 0.24);
+  cursor: pointer;
+  font-family: "Noto Sans CJK SC", "Microsoft YaHei", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-weight: 800;
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.love-button:hover {
+  box-shadow: 0 16px 30px rgba(217, 79, 97, 0.32);
+  filter: saturate(1.04);
+  transform: translateY(-2px);
+}
+
+.love-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.love-button:focus-visible,
+.text-link:focus-visible,
+.music-toggle:focus-visible {
+  outline: 3px solid rgba(100, 122, 77, 0.55);
+  outline-offset: 4px;
+}
+
+.text-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  color: var(--sage);
+  font-family: "Noto Sans CJK SC", "Microsoft YaHei", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-weight: 800;
+  text-decoration-color: rgba(100, 122, 77, 0.35);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.28em;
+}
+
+.love-button.is-loved {
+  box-shadow: 0 0 0 5px rgba(232, 168, 77, 0.22), 0 12px 24px rgba(217, 79, 97, 0.24);
+}
+
+.petals {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.petals span {
+  position: absolute;
+  top: -4rem;
+  width: 1.05rem;
+  height: 1.35rem;
+  border-radius: 80% 0 80% 0;
+  background: rgba(240, 120, 102, 0.48);
+  animation: petalFall 9s linear infinite;
+}
+
+.petals span:nth-child(1) {
+  left: 7%;
+  animation-delay: 0s;
+}
+
+.petals span:nth-child(2) {
+  left: 22%;
+  width: 0.8rem;
+  height: 1.05rem;
+  background: rgba(232, 168, 77, 0.46);
+  animation-delay: 2s;
+  animation-duration: 11s;
+}
+
+.petals span:nth-child(3) {
+  left: 44%;
+  animation-delay: 1.2s;
+  animation-duration: 10s;
+}
+
+.petals span:nth-child(4) {
+  left: 68%;
+  width: 0.7rem;
+  height: 0.95rem;
+  background: rgba(100, 122, 77, 0.34);
+  animation-delay: 3.3s;
+  animation-duration: 12s;
+}
+
+.petals span:nth-child(5) {
+  left: 82%;
+  animation-delay: 4.2s;
+  animation-duration: 9.5s;
+}
+
+.petals span:nth-child(6) {
+  left: 93%;
+  background: rgba(217, 79, 97, 0.38);
+  animation-delay: 5.8s;
+  animation-duration: 13s;
+}
+
+.note-section,
+.gratitude,
+.memory-strip,
+.closing {
+  width: min(1120px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.note-section {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: start;
+  padding: clamp(4rem, 9vw, 7rem) 0 clamp(2.5rem, 7vw, 5rem);
+}
+
+.note-copy {
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(1.2rem, 2.4vw, 1.7rem);
+  line-height: 1.65;
+}
+
+.gratitude {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  padding-bottom: clamp(3rem, 8vw, 6rem);
+}
+
+.gratitude-card {
+  position: relative;
+  min-height: 13rem;
+  padding: 1.35rem;
+  border: 1px solid rgba(217, 79, 97, 0.15);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.86), rgba(255, 248, 236, 0.72)),
+    var(--paper);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 190ms ease, box-shadow 190ms ease;
+}
+
+.gratitude-card::after {
+  position: absolute;
+  right: -2.4rem;
+  bottom: -2.6rem;
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  content: "";
+  background: radial-gradient(circle, rgba(255, 224, 220, 0.8), transparent 68%);
+}
+
+.gratitude-card:hover {
+  box-shadow: 0 20px 56px rgba(82, 38, 29, 0.18);
+  transform: translateY(-4px);
+}
+
+.card-icon {
+  display: grid;
+  width: 2.7rem;
+  height: 2.7rem;
+  place-items: center;
+  margin-bottom: 1.25rem;
+  border-radius: 50%;
+  color: var(--rose);
+  background: var(--blush);
+  font-size: 1.35rem;
+}
+
+.gratitude-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+
+.memory-strip {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(1.25rem, 4vw, 3rem);
+  align-items: center;
+  padding: clamp(2rem, 5vw, 3.5rem);
+  border-block: 1px solid rgba(100, 122, 77, 0.16);
+  background:
+    linear-gradient(120deg, rgba(233, 241, 221, 0.86), rgba(255, 253, 248, 0.68)),
+    var(--mint);
+}
+
+.memory-strip ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.memory-strip li {
+  min-height: 4rem;
+  padding: 1rem;
+  border-radius: var(--radius);
+  background: rgba(255, 253, 248, 0.78);
+  color: var(--muted);
+  font-family: "Noto Sans CJK SC", "Microsoft YaHei", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.closing {
+  display: grid;
+  justify-items: center;
+  padding: clamp(4rem, 10vw, 7rem) 0;
+  text-align: center;
+}
+
+.closing p {
+  max-width: 46rem;
+  margin: 1.2rem 0 1rem;
+  color: var(--muted);
+  font-size: clamp(1.35rem, 3.2vw, 2rem);
+  line-height: 1.5;
+}
+
+.closing strong {
+  color: var(--rose);
+  font-size: clamp(1.1rem, 2.4vw, 1.45rem);
+}
+
+.closing__flower {
+  position: relative;
+  width: 5.2rem;
+  height: 5.2rem;
+  animation: gentlePulse 3.4s ease-in-out infinite;
+}
+
+.closing__flower::before,
+.closing__flower::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    radial-gradient(circle at 50% 12%, var(--coral) 0 16%, transparent 17%),
+    radial-gradient(circle at 88% 50%, var(--rose) 0 16%, transparent 17%),
+    radial-gradient(circle at 50% 88%, var(--coral) 0 16%, transparent 17%),
+    radial-gradient(circle at 12% 50%, var(--rose) 0 16%, transparent 17%),
+    radial-gradient(circle at 50% 50%, var(--gold) 0 14%, transparent 15%);
+}
+
+.closing__flower::after {
+  transform: rotate(45deg);
+  opacity: 0.72;
+}
+
+@keyframes bloomIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes petalFall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -4rem, 0) rotate(0deg);
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(2.5rem, calc(100svh + 6rem), 0) rotate(280deg);
+  }
+}
+
+@keyframes gentlePulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.045);
+  }
+}
+
+@media (max-width: 780px) {
+  .hero {
+    min-height: 88svh;
+    padding: 1.25rem;
+    background:
+      linear-gradient(180deg, rgba(255, 250, 242, 0.95), rgba(255, 250, 242, 0.78) 56%, rgba(255, 250, 242, 0.32)),
+      image-set(url("assets/mothers-day-floral-hero.png") 1x);
+    background-position: 58% center;
+    background-size: cover;
+  }
+
+  .hero__content {
+    align-self: start;
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+
+  h1 {
+    font-size: clamp(3.1rem, 18vw, 5.3rem);
+  }
+
+  .hero__message {
+    max-width: 31rem;
+  }
+
+  .note-section,
+  .memory-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .gratitude {
+    grid-template-columns: 1fr;
+  }
+
+  .gratitude-card {
+    min-height: 10rem;
+  }
+
+  .memory-strip {
+    width: 100%;
+    padding-inline: 1rem;
+  }
+
+  .memory-strip ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero__actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .love-button,
+  .text-link {
+    width: 100%;
+  }
+
+  .text-link {
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+
+  .petals {
+    display: none;
+  }
+}
