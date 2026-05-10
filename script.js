@@ -2,6 +2,8 @@ const canvas = document.querySelector("#confetti");
 const button = document.querySelector("#celebrateButton");
 const music = document.querySelector("#backgroundMusic");
 const musicToggle = document.querySelector("#musicToggle");
+const luckyNumber = document.querySelector("#luckyNumber");
+const luckyNumberButton = document.querySelector("#luckyNumberButton");
 const ctx = canvas.getContext("2d");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -38,6 +40,11 @@ function toggleMusic() {
     music.pause();
     updateMusicButton(false, false);
   }
+}
+
+function generateLuckyNumber() {
+  const value = Math.floor(Math.random() * 10000);
+  luckyNumber.textContent = String(value).padStart(4, "0");
 }
 
 function resizeCanvas() {
@@ -160,6 +167,7 @@ function burstConfetti(sourceElement = button) {
 window.addEventListener("resize", resizeCanvas);
 button.addEventListener("click", () => burstConfetti(button));
 musicToggle.addEventListener("click", toggleMusic);
+luckyNumberButton.addEventListener("click", generateLuckyNumber);
 document.addEventListener(
   "pointerdown",
   (event) => {
@@ -175,6 +183,7 @@ document.addEventListener(
 );
 
 resizeCanvas();
+generateLuckyNumber();
 playMusic();
 window.setTimeout(() => {
   if (document.hasFocus()) {
